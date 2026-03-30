@@ -29,3 +29,105 @@ gdp.head()
 gdp.to_csv("gdp_per_capita.csv", index=False)
 co2.to_csv("co2_per_capita.csv", index=False)
 energy.to_csv("energy_per_capita.csv", index=False)
+#limpieza
+def ensure_schema(df):
+    expected_cols = ["country", "year", "value"]
+    for col in expected_cols:
+        if col not in df.columns:
+            df[col] = pd.Series(dtype="object")
+    return df[expected_cols]
+
+gdp = ensure_schema(gdp)
+co2 = ensure_schema(co2)
+energy = ensure_schema(energy)
+
+#Limpieza 
+def ensure_schema(df):
+    expected_cols = ["country", "year", "value"]
+    for col in expected_cols:
+        if col not in df.columns:
+            df[col] = pd.Series(dtype="object")
+    return df[expected_cols]
+
+gdp = ensure_schema(gdp)
+co2 = ensure_schema(co2)
+energy = ensure_schema(energy)
+print("GDP rows:", len(gdp))
+print("CO2 rows:", len(co2))
+print("Energy rows:", len(energy))
+gdp = gdp.rename(columns={"value": "gdp_per_capita"})
+co2 = co2.rename(columns={"value": "co2_per_capita"})
+energy = energy.rename(columns={"value": "energy_per_capita"})
+
+# Nos quedamos solo con datasets válidos
+dfs = [gdp, co2, energy]
+dfs = [df for df in dfs if not df.empty]
+
+from functools import reduce
+
+df = reduce(
+    lambda left, right: left.merge(right, on=["country", "year"], how="inner"),
+    dfs
+)
+
+df.dropna(inplace=True)
+df.head()
+# La API del World Bank puede devolver datasets vacíos para ciertos indicadores.
+# Se valida y normaliza la estructura de los DataFrames antes de realizar joins
+# para evitar errores y asegurar reproducibilidad del análisis.
+
+Análisis Exploratorio de Datos (EDA)
+df.shape
+df.columns
+df.describe()
+#El PBI per cápita presenta una alta dispersión, reflejando grandes diferencias entre países desarrollados y en desarrollo.
+#Las emisiones de CO₂ per cápita muestran asimetría, con pocos países concentrando valores elevados.
+#El consumo energético per cápita varía considerablemente, evidenciando distintos niveles de industrialización y eficiencia.
+
+#Visualización 1 – Relación entre PBI per cápita y emisiones de CO₂
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+if "gdp_per_capita" in df.columns and "co2_per_capita" in df.columns:
+    plt.figure(figsize=(8, 5))
+    sns.scatterplot(
+        data=df,
+        x="gdp_per_capita",
+        y="co2_per_capita",
+        alpha=0.5
+    )
+    plt.title("PBI per cápita vs Emisiones de CO₂")
+    plt.xlabel("PBI per cápita (USD)")
+    plt.ylabel("CO₂ per cápita (toneladas)")
+    plt.show()
+else:
+    print("No se puede graficiar PBI vs CO₂: falta alguna variable.")
+
+#Evolución temporal de un país (ejemplo)
+country = "Argentina"
+
+df_country = df[df["country"] == country]
+
+df_country.head()
+plt.figure(figsize=(9, 5))
+
+if "co2_per_capita" in df_country.columns:
+    plt.plot(
+        df_country["year"],
+        df_country["co2_per_capita"],
+        marker="o",
+        label="CO₂ per cápita"
+    )
+
+if "gdp_per_capita" in df_country.columns:
+    plt.plot(
+        df_country["year"],
+        df_country["gdp_per_capita"],
+        marker="o",
+        label="PBI per cápita"
+    )
+
+plt.title(f"Evolución temporal – {country}")
+plt.xlabel("Año")
+plt.legend()
+plt.show()
