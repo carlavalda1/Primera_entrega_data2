@@ -1,0 +1,59 @@
+Slide 1 – Título
+Crecimiento Económico, Consumo Energético y Emisiones de CO₂
+Subtítulo:
+Análisis exploratorio con datos del World Bank
+
+🟦 Slide 2 – Motivación y audiencia
+Motivación
+Entender la relación entre desarrollo económico y sostenibilidad ambiental para apoyar la toma de decisiones.
+Audiencia
+Ejecutivos del sector energético, financiero y organismos públicos.
+
+🟦 Slide 3 – Dataset y fuente
+
+Fuente: World Bank Open Data (API pública)
+Período analizado: 2010–2019
+Países: +180
+Variables:
+
+PBI per cápita
+Emisiones de CO₂ per cápita
+Consumo energético per cápita
+
+
+
+
+🟦 Slide 4 – Preguntas del análisis
+
+¿Existe relación entre crecimiento económico y emisiones de CO₂?
+¿El aumento del consumo energético implica más emisiones?
+¿Existen países con crecimiento económico y bajo impacto ambiental?
+
+
+🟦 Slide 5 – Visualización 1
+A mayor PBI per cápita, generalmente se observan mayores emisiones de CO₂.
+
+
+🟦 Slide 6 – Visualización 3
+📈 (pegás el gráfico temporal de Argentina u otro país)
+Mensaje clave:
+La evolución económica y ambiental cambia a lo largo del tiempo.
+
+🟦 Slide 7 – Insights principales
+
+El crecimiento económico suele aumentar las emisiones
+La relación no es lineal
+La eficiencia energética marca la diferencia
+
+
+🟦 Slide 8 – Implicancias para el negocio
+
+Evaluación de riesgo ambiental
+Oportunidades para energías limpias
+Soporte para decisiones de inversión
+
+
+🟦 Slide 9 – Conclusión
+El análisis muestra que es posible crecer económicamente con menor impacto ambiental si se optimiza el uso de energía.
+
+
